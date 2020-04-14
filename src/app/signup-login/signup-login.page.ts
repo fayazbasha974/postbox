@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { SignupLoginService } from './signup-login.service';
+import { SocketService } from '../socket/socket.service';
 
 @Component({
   selector: 'app-signup-login',
@@ -15,7 +16,7 @@ export class SignupLoginPage implements OnInit {
   personForm: FormGroup;
   endPoint: string;
 
-  constructor(private fb: FormBuilder, private service: SignupLoginService, private router: Router) { }
+  constructor(private fb: FormBuilder, private service: SignupLoginService, private router: Router, private socketService: SocketService) { }
 
   ngOnInit() {
     this.title = 'Sign Up';
@@ -44,7 +45,9 @@ export class SignupLoginPage implements OnInit {
       this.personForm.removeControl('displayName');
       this.personForm.reset();
     } else {
+      this.socketService.initialize(user.mobileNumber);
       localStorage.setItem('token', user.token);
+      localStorage.setItem('mobileNumber', user.mobileNumber);
       this.router.navigateByUrl('home');
     }
   }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://fazit.herokuapp.com/'
+  baseUrl: 'https://fazit.herokuapp.com/',
+  // baseUrl: 'http://localhost:3000/'
 };
 
 /*

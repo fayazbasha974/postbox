@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChatService } from './chat.service';
-import io from 'socket.io-client';
+import { SocketService } from '../socket/socket.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,20 +14,18 @@ export class ChatPage implements OnInit {
   message: string;
   chatList: any;
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute, private chatService: ChatService) { }
+  constructor(private router: Router, private activeRoute: ActivatedRoute, private chatService: ChatService, private socket: SocketService) { }
 
   ngOnInit() {
+    this.checkToken();
     this.message = '';
     this.chatList = [];
     this.activeRoute.queryParams.subscribe(params => {
       this.reciever = params;
       this.getChat();
     });
-    const socket = io('https://fazit.herokuapp.com/');
-    socket.on('con', data => {
-      console.log(data);
-    });
-    socket.on('msg', data => {
+
+    this.socket.io.on('msg', data => {
       this.chatList.push(data);
       this.message = '';
     });
@@ -52,6 +50,12 @@ export class ChatPage implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  checkToken() {
+    if (localStorage.getItem('token')) {
+      this.socket.initialize(localStorage.getItem('mobileNumber'));
+    }
   }
 
 }
