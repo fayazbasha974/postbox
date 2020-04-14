@@ -26,7 +26,11 @@ export class ChatPage implements OnInit {
     });
 
     this.socket.io.on('msg', data => {
-      this.appendMessage(data)
+      if (data.sender == this.reciever.mobileNumber) {
+        this.appendMessage(data);        
+      } else {
+        console.log('notification');
+      }
     });
   }
 
