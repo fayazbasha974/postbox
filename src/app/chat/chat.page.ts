@@ -26,8 +26,7 @@ export class ChatPage implements OnInit {
     });
 
     this.socket.io.on('msg', data => {
-      this.chatList.push(data);
-      this.message = '';
+      this.appendMessage(data)
     });
   }
 
@@ -37,6 +36,7 @@ export class ChatPage implements OnInit {
       id: this.reciever._id,
       message: this.message
     }).subscribe(success => {
+      this.appendMessage(success);
     }, error => {
       console.log(error);
     })
@@ -56,6 +56,11 @@ export class ChatPage implements OnInit {
     if (localStorage.getItem('token')) {
       this.socket.initialize(localStorage.getItem('mobileNumber'));
     }
+  }
+
+  appendMessage(data) {
+    this.chatList.push(data);
+    this.message = '';
   }
 
 }
