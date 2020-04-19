@@ -35,4 +35,8 @@ export class FindFriendPage implements OnInit {
     });
   }
 
+  back() {
+    window.history.back();
+  }
+
 }

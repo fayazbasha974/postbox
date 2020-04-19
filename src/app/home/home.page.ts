@@ -20,11 +20,13 @@ export class HomePage implements OnInit {
     this.getDetails();
   }
 
-  getDetails() {
+  getDetails(event?) {
     this.homeService.getDetails().subscribe(response => {
       this.total = response;
       this.friends = response.friends;
+      event? event.target.complete() : '';
     }, error => {
+      event? event.target.complete() : '';
       console.log(error);
     });
   }

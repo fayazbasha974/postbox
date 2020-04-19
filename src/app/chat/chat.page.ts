@@ -67,4 +67,8 @@ export class ChatPage implements OnInit {
     this.message = '';
   }
 
+  back() {
+    window.history.back();
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { LoaderService } from '../loader/loader.service';
 import { SignupLoginService } from './signup-login.service';
 import { SocketService } from '../socket/socket.service';
 
@@ -16,7 +17,7 @@ export class SignupLoginPage implements OnInit {
   personForm: FormGroup;
   endPoint: string;
 
-  constructor(private fb: FormBuilder, private service: SignupLoginService, private router: Router, private socketService: SocketService) { }
+  constructor(private fb: FormBuilder, private service: SignupLoginService, private router: Router, private socketService: SocketService, private loader: LoaderService) { }
 
   ngOnInit() {
     this.title = 'Sign Up';
@@ -30,9 +31,11 @@ export class SignupLoginPage implements OnInit {
 
   Submit() {
     if (this.personForm.valid) {
+      this.loader.presentLoading();
       this.service.postData(this.endPoint, this.personForm.value).subscribe(response => {
         this.changeToLogin(response);
       }, error => {
+        this.loader.dismissLoading();
         console.log(error);
       })
     }

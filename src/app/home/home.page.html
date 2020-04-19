@@ -4,10 +4,18 @@
       Friends
       <span class="pull-right" (click)="getDetails()">Refresh</span>
       <span class="pull-right" (click)="findFriend()">Add</span>
-      <span class="pull-right" (click)="showRequests()">Requests</span>
+      <span class="pull-right" (click)="showRequests()">
+        Requests
+        <!-- <ion-badge color="primary" *ngIf="total">{{total.friendRequests.length}}</ion-badge> -->
+      </span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="getDetails($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let friend of friends" (click)="openChat(friend)">
