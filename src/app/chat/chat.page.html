@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>
       <ion-icon name="arrow-back" (click)="back()"></ion-icon>
-      chat
+      {{reciever.displayName}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,6 +16,7 @@
       </span>
     </ion-label>
   </ion-item>
+</ion-content>
 
   <ion-row>
     <ion-col size="10">
@@ -27,5 +28,3 @@
       <ion-button color="primary" (click)="Submit()">Submit</ion-button>
     </ion-col>
   </ion-row>
-
-</ion-content>

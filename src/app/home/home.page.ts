@@ -1,4 +1,4 @@
-import { Component , OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { HomeService } from './home.service';
@@ -14,7 +14,7 @@ export class HomePage implements OnInit {
   total: any;
   isRequests: boolean;
 
-  constructor(private homeService: HomeService, private router: Router) {}
+  constructor(private homeService: HomeService, private router: Router) { }
 
   ngOnInit() {
     this.getDetails();
@@ -23,22 +23,16 @@ export class HomePage implements OnInit {
   getDetails(event?) {
     this.homeService.getDetails().subscribe(response => {
       this.total = response;
-      this.friends = response.friends;
-      event? event.target.complete() : '';
+      this.friends = this.isRequests ? response.friendRequests : response.friends;
+      event ? event.target.complete() : '';
     }, error => {
-      event? event.target.complete() : '';
-      console.log(error);
+      event ? event.target.complete() : '';
     });
   }
 
   openChat(friend: any) {
     if (!this.isRequests) {
-      this.router.navigate(['/chat'], { queryParams:  friend  });
-    } else {
-      this.homeService.acceptRequest({id: friend._id}).subscribe(success => {
-      }, error => {
-        console.log(error);
-      });
+      this.router.navigate(['/chat'], { queryParams: friend });
     }
   }
 
@@ -55,5 +49,16 @@ export class HomePage implements OnInit {
     this.isRequests = false;
     this.friends = this.total.friends;
   }
+
+  acceptOrReject(friend: any, type: string) {
+    this.homeService.acceptOrReject({ id: friend._id }, type).subscribe(success => {
+      this.total.friendRequests = this.total.friendRequests.filter(request => request._id !== friend._id);
+      this.friends = this.total.friendRequests;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+
 
 }

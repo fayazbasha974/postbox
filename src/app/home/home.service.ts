@@ -14,8 +14,9 @@ export class HomeService {
     return this.apiService.get(url);
   }
 
-  acceptRequest(data: any): Observable<any> {
-    return this.apiService.post('auth/acceptRequest', data);
+  acceptOrReject(data: any, type: string): Observable<any> {
+    const url = `auth/${type}Request`;
+    return this.apiService.post(url, data);
   }
 
 }
