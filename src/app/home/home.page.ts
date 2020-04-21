@@ -36,7 +36,6 @@ export class HomePage implements OnInit {
       this.router.navigate(['/chat'], { queryParams:  friend  });
     } else {
       this.homeService.acceptRequest({id: friend._id}).subscribe(success => {
-        console.log(success);
       }, error => {
         console.log(error);
       });
@@ -50,6 +49,11 @@ export class HomePage implements OnInit {
   showRequests() {
     this.isRequests = true;
     this.friends = this.total.friendRequests;
+  }
+
+  backHome() {
+    this.isRequests = false;
+    this.friends = this.total.friends;
   }
 
 }

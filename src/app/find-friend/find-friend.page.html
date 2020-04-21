@@ -9,17 +9,18 @@
 
 <ion-content>
   <ion-row>
-    <ion-col size="10">
-      <ion-item>
+    <ion-col size="9">
+      <!-- <ion-item>
         <ion-input place-holder="10 Digit Mobile Number" [(ngModel)]="mobileNumber"></ion-input>
-      </ion-item>
+      </ion-item> -->
+      <ion-searchbar inputmode="numeric" [(ngModel)]="mobileNumber"></ion-searchbar>
     </ion-col>
     <ion-col size="2">
       <ion-button color="primary" (click)="Search()">Search</ion-button>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="findFriends">
-    <ion-col size="10">
+    <ion-col size="9">
       <ion-list>
         <ion-item>
           <ion-avatar slot="start">
