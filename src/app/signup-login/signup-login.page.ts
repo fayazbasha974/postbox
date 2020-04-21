@@ -29,14 +29,14 @@ export class SignupLoginPage implements OnInit {
     });
   }
 
-  Submit() {
+  async Submit() {
     if (this.personForm.valid) {
-      this.loader.presentLoading();
+      await this.loader.presentLoading();
       this.service.postData(this.endPoint, this.personForm.value).subscribe(response => {
+        this.loader.dismissLoading();
         this.changeToLogin(response);
       }, error => {
         this.loader.dismissLoading();
-        console.log(error);
       })
     }
   }

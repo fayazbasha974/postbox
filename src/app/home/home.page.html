@@ -1,34 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      <!-- Friends -->
-      <!-- <ion-icon name="people-sharp" (click)="backHome()"></ion-icon> -->
       <ion-icon name="chatbubbles-sharp" (click)="backHome()"></ion-icon>
       <ion-icon class="pull-right" name="person-add-sharp" (click)="findFriend()"></ion-icon>
       <ion-icon class="pull-right" name="person-sharp" (click)="showRequests()"></ion-icon>
-      <!-- <span class="pull-right" (click)="findFriend()">Add</span> -->
-      <!-- <span class="pull-right" (click)="showRequests()"> -->
-        <!-- Requests -->
-        <!-- <ion-badge color="primary" *ngIf="total">{{total.friendRequests.length}}</ion-badge> -->
-      <!-- </span> -->
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="getDetails($event)">
     <ion-refresher-content>
-      <ion-list>
-        <ion-item *ngFor="let friend of friends" (click)="openChat(friend)">
-          <ion-avatar slot="start">
-            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-          </ion-avatar>
-          <ion-label>{{friend.displayName}}</ion-label>
-        </ion-item>
-      </ion-list>
     </ion-refresher-content>
   </ion-refresher>
-</ion-content>
-<!-- <ion-content>
   <ion-list>
     <ion-item *ngFor="let friend of friends" (click)="openChat(friend)">
       <ion-avatar slot="start">
@@ -37,4 +20,4 @@
       <ion-label>{{friend.displayName}}</ion-label>
     </ion-item>
   </ion-list>
-</ion-content> -->
+</ion-content>
