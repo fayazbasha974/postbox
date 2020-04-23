@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { HomeService } from './home.service';
+import { LoaderService } from '../loader/loader.service';
 
 @Component({
   selector: 'app-home',
@@ -14,19 +15,22 @@ export class HomePage implements OnInit {
   total: any;
   isRequests: boolean;
 
-  constructor(private homeService: HomeService, private router: Router) { }
+  constructor(private homeService: HomeService, private router: Router, private loader: LoaderService) { }
 
   ngOnInit() {
     this.getDetails();
   }
 
-  getDetails(event?) {
+  async getDetails(event?) {
+    await this.loader.presentLoading();
     this.homeService.getDetails().subscribe(response => {
       this.total = response;
       this.friends = this.isRequests ? response.friendRequests : response.friends;
       event ? event.target.complete() : '';
+      this.loader.dismissLoading();
     }, error => {
       event ? event.target.complete() : '';
+      this.loader.dismissLoading();
     });
   }
 
@@ -50,12 +54,15 @@ export class HomePage implements OnInit {
     this.friends = this.total.friends;
   }
 
-  acceptOrReject(friend: any, type: string) {
+  async acceptOrReject(friend: any, type: string) {
+    await this.loader.presentLoading();
     this.homeService.acceptOrReject({ id: friend._id }, type).subscribe(success => {
       this.total.friendRequests = this.total.friendRequests.filter(request => request._id !== friend._id);
       this.friends = this.total.friendRequests;
+      this.loader.dismissLoading();
     }, error => {
       console.log(error);
+      this.loader.dismissLoading();
     });
   }
 
